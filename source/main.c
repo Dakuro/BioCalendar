@@ -30,7 +30,7 @@ int main(){
 	printf("For Julian Day %d, the Gregorian date is: %d-%d-%d\n", julianDay, day, month, year);
 	printf("Enter a Gregorian date to be converted to a Julian Day: ");
 	scanf("%d%d%d", &day, &month, &year);
-	int JourJulien = convertToJulian(day, month, year);
+	julianDay = convertToJulian(day, month, year);
 	printf("For the Gregorian date %d-%d-%d, Julian Day is: %d\n", day, month, year, julianDay);
 	return 0;
 }
