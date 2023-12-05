@@ -38,7 +38,8 @@ GregorianDate convertToGregorian(int julianDay){
 void dispJulianDay(){
 	int julianDay;
 	GregorianDate date;
-	printf("Enter a Gregorian date to be converted to a Julian Day: ");
+
+	printf("Enter a Gregorian date (format: DD/MM/YYYY) to be converted to a Julian Day: ");
 	scanf("%d%d%d", &date.day, &date.month, &date.year);
 	julianDay = convertToJulian(date);
 	printf("For the Gregorian date %d-%d-%d, Julian Day is: %d\n", date.day, date.month, date.year, julianDay);
@@ -48,7 +49,8 @@ void dispJulianDay(){
 void dispGregorianDate(){
 	int julianDay;
 	GregorianDate date;
-	printf("\n Enter a Julian Day to be converted to a Gregorian date: ");
+
+	printf("\n Enter a Julian Day to be converted to a Gregorian date (format: DD/MM/YYYY): ");
 	scanf("%d", &julianDay);
 	date = convertToGregorian(julianDay);
 	printf("For Julian Day %d, the Gregorian date is: %d-%d-%d\n", julianDay, date.day, date.month, date.year);
