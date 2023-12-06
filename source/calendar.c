@@ -91,7 +91,7 @@ void printCalendar(){
 					} else{printf(" ");}
 					break;
 				default: // All other lines
-					if(i > 4){dayNameID = 0;}
+					if(i > 4){dayNameID = 0;} // Reset dayNameID if day 1 has already been printed (= on fifth line)
 					if(j == 0 || j == CALENDAR_WIDTH - 1){
 						printf("|");
 					} else if(j == 2 + 3 * dayNameID && dayToPrint <= monthLength){ // Display days, if applicable
