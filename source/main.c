@@ -1,45 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct GregorianDate{
-	int day;
-	int month;
-	int year;
-} GregorianDate;
+#include "../header/functions.h"
 
 
-// Convert a Gregorian date to a Julian Day and return it
-int toJulian(GregorianDate date){
-	int day = date.day;
-	int month = date.month;
-	int year = date.year;
-	int julianDay = (1461 * (year + 4800 + (month - 14) / 12)) / 4
-			+ (367 * (month - 2 - 12 * ((month - 14) / 12))) / 12
-			- (3 * ((year + 4900 + (month - 14) / 12) / 100)) / 4
-			+ day - 32075;
-
-	return julianDay;
-}
-
-
-
-// Convert a Julian Day to a Gregorian date and return it
-GregorianDate toGregorian(int julianDay){
-	int f = julianDay + 1401 + (((4 * julianDay + 274277) / 146097) * 3) / 4 - 38;
-	int e = 4 * f + 3;
-	int g = (e % 1461) / 4;
-	int h = 5 * g + 2;
-
-	GregorianDate date;
-	date.day = (h % 153) / 5 + 1;
-	date.month = ((h / 153 + 2) % 12) + 1;
-	date.year = e / 1461 - 4716 + (12 + 2 - date.month) / 12;
-
-	return date;
-}
-
-
-// For a given Gregorian date, display its Julian Day equivalent
+// TEST: For a given Gregorian date, display its Julian Day equivalent
 void dispJulianDay(){
 	int julianDay;
 	GregorianDate date;
@@ -51,7 +15,7 @@ void dispJulianDay(){
 }
 
 
-// For a given Julian Day, display its Gregorian date equivalent
+// TEST: For a given Julian Day, display its Gregorian date equivalent
 void dispGregorianDate(){
 	int julianDay;
 	GregorianDate date;
@@ -64,8 +28,19 @@ void dispGregorianDate(){
 
 
 int main(){
-	dispJulianDay();
-	dispGregorianDate();
+	// dispJulianDay();
+	// dispGregorianDate();
 
 	return 0;
 }
+
+// IN: year, month
+// OUT: calendar
+// Step 01: Find number of days
+	// JDN1 = toJulian({1, month, year});
+	// JDN2 = month == 12 ? toJulian({1, 1, year + 1}) : toJulian({1, month + 1, year});
+	// days = JDN2 - JDN1;
+// Step 02: Determine starting day name
+	// switch(JDN1 % 7){0 -> "mo", ..., 6 -> "su"}
+// Step 03: Display calendar
+	//
