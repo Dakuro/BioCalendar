@@ -74,7 +74,8 @@ void printCalendar(){
 						printf("|");
 					} else if(j == 2){ // Display month and year
 						printf("%s%s%d", MONTH_NAMES[date.month - 1], " ", date.year);
-						if (date.month == 12) {
+						if (date.month == 2 || date.month == 8 || date.month == 12) {
+							// Months with an accentuated letter in their name need different spacing
 							j += strlen(MONTH_NAMES[date.month - 1]) + 3;
 						} else {
 							j += strlen(MONTH_NAMES[date.month - 1]) + 4;
