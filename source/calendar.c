@@ -81,7 +81,7 @@ int calendarLogic(gregorianDate date, int height, int width, int monthLength, in
 		if(!isWriteable){ printf(" "); break; }
 		// Display days, if applicable
 		for(; dayNameID < 7; ++dayNameID){
-			*dayToPrint < 10 ? printf(" %d ", *dayToPrint) : printf("%d ", *dayToPrint);
+			printf(*dayToPrint < 10 ? " %d " : "%d ", *dayToPrint);
 			++*dayToPrint;
 			newWidth += 3;
 			if(*dayToPrint > monthLength) break;
