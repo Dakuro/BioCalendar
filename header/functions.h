@@ -15,6 +15,8 @@ typedef struct bioDates{
     gregorianDate datePlus2;
 } bioDates;
 
+void menu(); // Display a menu to select which program to use
+
 // Conversions
 int toJulian(gregorianDate date); // Convert a Gregorian date to a Julian Day and return it
 gregorianDate toGregorian(int julianDay); // Convert a Julian Day to a Gregorian date and return it

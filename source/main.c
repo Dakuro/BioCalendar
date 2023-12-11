@@ -24,9 +24,31 @@ void dispGregorianDate(){
 }
 
 
+void menu(){
+	int menuChoice = 0;
+	do{
+		printf("Quel programme utiliser ?\n"
+		       "1 - Calendrier\n"
+		       "2 - Biorythme\n"
+		       "Autre - Quitter\n");
+		scanf("%d", &menuChoice);
+		switch(menuChoice){
+		case 1:
+			printCalendar();
+			break;
+		case 2:
+			printBiorhythm();
+			break;
+		default:
+			break;
+		}
+	} while(menuChoice == 1 || menuChoice == 2);
+}
+
+
 int main(){
 	// dispJulianDay();
 	// dispGregorianDate();
-	printCalendar();
+	menu();
 	return 0;
 }
