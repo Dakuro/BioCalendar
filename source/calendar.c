@@ -56,38 +56,38 @@ int calendarLogic(gregorianDate date, int height, int width, int monthLength, in
 	bool isWriteable = newWidth == 2 + 3 * dayNameID && *dayToPrint <= monthLength;
 	bool isAccentuated = date.month == 2 || date.month == 8 || date.month == 12;
 	switch(height){
-		case 0: // First line
-		case 2: // Third line
-		case 10: // Last line
-			printf(isBorder ? "+" : "-");
-			break;
-		case 1: // Second line
-			if(isBorder){ printf("|"); break; }
-			if(newWidth != 2){ printf(" "); break; }
-			// Display month and year
-			printf("%s %d", MONTH_NAMES[date.month - 1], date.year);
-			// Months with an accentuated letter in their name need different spacing
-			newWidth += (int) strlen(MONTH_NAMES[date.month - 1]) + (isAccentuated ? 3 : 4);
-			break;
-		case 3: // Fourth line
-			if(isBorder){ printf("|"); break; }
-			if(newWidth != 2){ printf(" "); break; }
-			// Display names of the days
-			printf("%s", DAYS_NAMES);
-			newWidth += (int) strlen(DAYS_NAMES) - 1;
-			break;
-		default: // All other lines
-			if(isBorder){ printf("|"); break; }
-			if(!isWriteable){ printf(" "); break; }
-			// Display days, if applicable
-			for(; dayNameID < 7; ++dayNameID){
-				*dayToPrint < 10 ? printf(" %d ", *dayToPrint) : printf("%d ", *dayToPrint);
-				++*dayToPrint;
-				newWidth += 3;
-				if(*dayToPrint > monthLength) break;
-			}
-			--newWidth;
-			break;
+	case 0: // First line
+	case 2: // Third line
+	case 10: // Last line
+		printf(isBorder ? "+" : "-");
+		break;
+	case 1: // Second line
+		if(isBorder){ printf("|"); break; }
+		if(newWidth != 2){ printf(" "); break; }
+		// Display month and year
+		printf("%s %d", MONTH_NAMES[date.month - 1], date.year);
+		// Months with an accentuated letter in their name need different spacing
+		newWidth += (int) strlen(MONTH_NAMES[date.month - 1]) + (isAccentuated ? 3 : 4);
+		break;
+	case 3: // Fourth line
+		if(isBorder){ printf("|"); break; }
+		if(newWidth != 2){ printf(" "); break; }
+		// Display names of the days
+		printf("%s", DAYS_NAMES);
+		newWidth += (int) strlen(DAYS_NAMES) - 1;
+		break;
+	default: // All other lines
+		if(isBorder){ printf("|"); break; }
+		if(!isWriteable){ printf(" "); break; }
+		// Display days, if applicable
+		for(; dayNameID < 7; ++dayNameID){
+			*dayToPrint < 10 ? printf(" %d ", *dayToPrint) : printf("%d ", *dayToPrint);
+			++*dayToPrint;
+			newWidth += 3;
+			if(*dayToPrint > monthLength) break;
+		}
+		--newWidth;
+		break;
 	}
 	return newWidth;
 }
