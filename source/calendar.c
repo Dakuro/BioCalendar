@@ -29,6 +29,7 @@ gregorianDate getDate(){
 	gregorianDate date;
 	printf("Entrer une année puis un mois: ");
 	scanf("%d%d", &date.year, &date.month);
+	printf("\n");
 	date.day = 1;
 	return date;
 }
@@ -100,7 +101,6 @@ void printCalendar(){
 	int dayToPrint = 1;
 	int dayNameID = getDayNameID(date);
 	int height, width;
-	printf("\n");
 	for(height = 0; height < CALENDAR_HEIGHT; ++height){
 		if(height == 5) dayNameID = 0; // Reset dayNameID if week 1 has already been printed
 		for(width = 0; width < CALENDAR_WIDTH; ++width){
@@ -108,4 +108,5 @@ void printCalendar(){
 		}
 		printf("\n");
 	}
+	printf("\n");
 }

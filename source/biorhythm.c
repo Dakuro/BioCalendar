@@ -6,6 +6,7 @@ gregorianDate getBirthDate(){
 	gregorianDate birthDate;
 	printf("Entrer une date de naissance (JJ MM AAAA): ");
 	scanf("%d%d%d", &birthDate.day, &birthDate.month, &birthDate.year);
+	printf("\n");
 	return birthDate;
 }
 
@@ -15,6 +16,7 @@ gregorianDate getCentralDate(){
 	gregorianDate centralDate;
 	printf("Entrer la date centrale du biorythme (JJ MM AAAA): ");
 	scanf("%d%d%d", &centralDate.day, &centralDate.month, &centralDate.year);
+	printf("\n");
 	return centralDate;
 }
 
@@ -33,5 +35,7 @@ bioDates getDates(gregorianDate dateCentral){
 
 // Print a biorhythm
 void printBiorhythm(){
-
+	gregorianDate birthDate = getBirthDate();
+	gregorianDate centralDate = getCentralDate();
+	bioDates dates = getDates(centralDate);
 }
