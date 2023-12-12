@@ -52,9 +52,8 @@ int getDayNameID(gregorianDate date){
 
 
 int calendarLogic(gregorianDate date, int height, int width, int monthLength, int *dayToPrint, int dayNameID){
-	int newWidth = width;
-	bool isBorder = newWidth == 0 || newWidth == CALENDAR_WIDTH - 1;
-	bool isWriteable = newWidth == 2 + 3 * dayNameID && *dayToPrint <= monthLength;
+	bool isBorder = width == 0 || width == CALENDAR_WIDTH - 1;
+	bool isWriteable = width == 2 + 3 * dayNameID && *dayToPrint <= monthLength;
 	bool isAccentuated = date.month == 2 || date.month == 8 || date.month == 12;
 	switch(height){
 	case 0: // First line
@@ -64,18 +63,18 @@ int calendarLogic(gregorianDate date, int height, int width, int monthLength, in
 		break;
 	case 1: // Second line
 		if(isBorder){ printf("|"); break; }
-		if(newWidth != 2){ printf(" "); break; }
+		if(width != 2){ printf(" "); break; }
 		// Display month and year
 		printf("%s %d", MONTH_NAMES[date.month - 1], date.year);
 		// Months with an accentuated letter in their name need different spacing
-		newWidth += (int) strlen(MONTH_NAMES[date.month - 1]) + (isAccentuated ? 3 : 4);
+		width += (int) strlen(MONTH_NAMES[date.month - 1]) + (isAccentuated ? 3 : 4);
 		break;
 	case 3: // Fourth line
 		if(isBorder){ printf("|"); break; }
-		if(newWidth != 2){ printf(" "); break; }
+		if(width != 2){ printf(" "); break; }
 		// Display names of the days
 		printf("%s", DAYS_NAMES);
-		newWidth += (int) strlen(DAYS_NAMES) - 1;
+		width += (int) strlen(DAYS_NAMES) - 1;
 		break;
 	default: // All other lines
 		if(isBorder){ printf("|"); break; }
@@ -84,13 +83,13 @@ int calendarLogic(gregorianDate date, int height, int width, int monthLength, in
 		for(; dayNameID < 7; ++dayNameID){
 			printf(*dayToPrint < 10 ? " %d " : "%d ", *dayToPrint);
 			++*dayToPrint;
-			newWidth += 3;
+			width += 3;
 			if(*dayToPrint > monthLength) break;
 		}
-		--newWidth;
+		--width;
 		break;
 	}
-	return newWidth;
+	return width;
 }
 
 
