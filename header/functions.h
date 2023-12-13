@@ -32,6 +32,11 @@ void printCalendar(); // Print a calendar page
 gregorianDate getBirthDate(); // Prompt user for a day, month and year of birth and return their birthdate
 gregorianDate getCentralDate(); // Prompt user for a day, month and year and return the central date of the biorhythm
 bioDates getDates(gregorianDate dateCentral); // Use the central date to determine 4 dates around it and return them
+double getDaysElapsed(gregorianDate birthDate, gregorianDate actualDate);
+double getPhysical(double daysElapsed);
+double getEmotional(double daysElapsed);
+double getIntellectual(double daysElapsed);
+int biorhythmLogic(int line, int column, gregorianDate birthDate, bioDates dates);
 void printBiorhythm(); // Print a biorhythm
 
 #endif //BIOCALENDAR_FUNCTIONS_H
