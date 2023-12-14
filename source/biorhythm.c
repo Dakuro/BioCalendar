@@ -3,6 +3,21 @@
 #include <string.h>
 #include "../header/functions.h"
 
+const char *MONTHS[12] = {
+	"jan",
+	"fev",
+	"mar",
+	"avr",
+	"mai",
+	"jun",
+	"jul",
+	"aou",
+	"sep",
+	"oct",
+	"nov",
+	"dec"
+};
+
 const char *LEVELS[5] = {
 	" %.2lf.. %.2lf: ", // Both positive values
 	"%.2lf.. %.2lf: ", // Mixed values
@@ -93,7 +108,10 @@ int biorhythmLogic(int line, int column, gregorianDate birthDate, bioDates dates
 		column = (int) strlen(LEVELS[3]);
 		return column;
 	}
-	switch(line){
+	printf(line == 4 ? "-" : " ");
+	
+	
+	/*switch(line){
 	case 0:
 		printf("-");
 		break;
@@ -103,7 +121,8 @@ int biorhythmLogic(int line, int column, gregorianDate birthDate, bioDates dates
 	default:
 		printf("*");
 		break;
-	}
+	}*/
+	
 	return column;
 }
 
