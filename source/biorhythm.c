@@ -44,62 +44,50 @@ const int MAX_LINE = 13;
 const int MAX_COLUMN = 100;
 
 // Prompt user for a day, month and year of birth and return their birthdate
-gregorianDate getBirthDate(){
+int getBirthDate(){
 	gregorianDate birthDate;
 	printf("Entrer une date de naissance (JJ MM AAAA): ");
 	scanf("%d%d%d", &birthDate.day, &birthDate.month, &birthDate.year);
 	printf("\n");
-	return birthDate;
+	return toJulian(birthDate);
 }
 
 
 // Prompt user for a day, month and year and return the central date of the biorhythm
-gregorianDate getCentralDate(){
+int getCentralDate(){
 	gregorianDate centralDate;
 	printf("Entrer la date centrale du biorythme (JJ MM AAAA): ");
 	scanf("%d%d%d", &centralDate.day, &centralDate.month, &centralDate.year);
 	printf("\n");
-	return centralDate;
+	return toJulian(centralDate);
 }
 
 
-// Use the central date to determine 4 dates around it and return them
-bioDates getDates(gregorianDate dateCentral){
-	bioDates dates;
-	dates.dateMinus2 = toGregorian(toJulian(dateCentral) - 14);
-	dates.dateMinus1 = toGregorian(toJulian(dateCentral) - 7);
-	dates.dateCentral = dateCentral;
-	dates.datePlus1 = toGregorian(toJulian(dateCentral) + 7);
-	dates.datePlus2 = toGregorian(toJulian(dateCentral) + 14);
-	return dates;
+int getDaysElapsed(int birthDate, int actualDate){
+	return actualDate - birthDate;
 }
 
 
-double getDaysElapsed(gregorianDate birthDate, gregorianDate actualDate){
-	double daysElapsed = toJulian(actualDate) - toJulian(birthDate);
-	return daysElapsed;
-}
-
-
-double getPhysical(double daysElapsed){
-	double physicalState = sin((2.0 * M_PI * daysElapsed) / 23.0);
+double getPhysical(int daysElapsed){
+	double physicalState = sin((2.0 * M_PI * (double) daysElapsed) / 23.0);
 	return physicalState;
 }
 
 
-double getEmotional(double daysElapsed){
-	double emotionalState = sin((2.0 * M_PI * daysElapsed) / 28.0);
+double getEmotional(int daysElapsed){
+	double emotionalState = sin((2.0 * M_PI * (double) daysElapsed) / 28.0);
 	return emotionalState;
 }
 
 
-double getIntellectual(double daysElapsed){
-	double intellectualState = sin((2.0 * M_PI * daysElapsed) / 33.0);
+double getIntellectual(int daysElapsed){
+	double intellectualState = sin((2.0 * M_PI * (double) daysElapsed) / 33.0);
 	return intellectualState;
 }
 
 
-int biorhythmLogic(int line, int column, gregorianDate birthDate, bioDates dates){
+int biorhythmLogic(int line, int column, int birthDate, int centralDate){
+	int dateIndex, actualDate, daysElapsed;
 	if(column == 0){
 		if(line < 4) printf(LEVELS[0], VALUES[line + 1], VALUES[line]);
 		else if(line == 4) printf(LEVELS[1], VALUES[line + 1], VALUES[line]);
@@ -108,20 +96,19 @@ int biorhythmLogic(int line, int column, gregorianDate birthDate, bioDates dates
 		column = (int) strlen(LEVELS[3]);
 		return column;
 	}
-	printf(line == 4 ? "-" : " ");
 	
+	dateIndex = (column - (int) strlen(LEVELS[3])) / 3;
+	actualDate = centralDate - 14 + dateIndex;
+	daysElapsed = getDaysElapsed(birthDate, actualDate);
 	
-	/*switch(line){
-	case 0:
-		printf("-");
-		break;
-	case 1:
-		printf("+");
-		break;
-	default:
-		printf("*");
-		break;
-	}*/
+	// cas 1 : lettre
+		//
+	// cas 2 : |
+		// if dateIndex % 7 == 0
+	// cas 3 : -
+		// if not cas 1 && not cas 2 && line == 4
+	// cas 4 : espace
+		// if not cas 1 && not cas 2 && not cas 3
 	
 	return column;
 }
@@ -129,13 +116,12 @@ int biorhythmLogic(int line, int column, gregorianDate birthDate, bioDates dates
 
 // Print a biorhythm
 void printBiorhythm(){
-	gregorianDate birthDate = getBirthDate();
-	gregorianDate centralDate = getCentralDate();
-	bioDates dates = getDates(centralDate);
+	int birthDate = getBirthDate();
+	int centralDate = getCentralDate();
 	int line, column;
 	for(line = 0; line < MAX_LINE; ++line){
 		for(column = 0; column < MAX_COLUMN; ++column){
-			column = biorhythmLogic(line, column, birthDate, dates);
+			column = biorhythmLogic(line, column, birthDate, centralDate);
 		}
 		printf("\n");
 	}

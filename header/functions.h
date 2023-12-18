@@ -7,14 +7,6 @@ typedef struct gregorianDate{
 	int year;
 } gregorianDate;
 
-typedef struct bioDates{
-    gregorianDate dateMinus2;
-    gregorianDate dateMinus1;
-    gregorianDate dateCentral;
-    gregorianDate datePlus1;
-    gregorianDate datePlus2;
-} bioDates;
-
 void menu(); // Display a menu to select which program to use
 
 // Conversions
@@ -23,20 +15,19 @@ gregorianDate toGregorian(int julianDay); // Convert a Julian Day to a Gregorian
 
 // Calendar
 gregorianDate getDate(); // Prompt user for a year and month and return the Gregorian date for day 1
-int getMonthLength(gregorianDate date); // Use a Gregorian date to get the number of days in its month and return it
+int getMonthLength(gregorianDate date); // Get the number of days in a month and return it
 int getDayNameID(gregorianDate date); // Return an ID corresponding to the day (0 -> Monday, ..., 6 -> Sunday)
 int calendarLogic(gregorianDate date, int height, int width, int monthLength, int *dayToPrint, int dayNameID);
 void printCalendar(); // Print a calendar page
 
 // Biorhythm
-gregorianDate getBirthDate(); // Prompt user for a day, month and year of birth and return their birthdate
-gregorianDate getCentralDate(); // Prompt user for a day, month and year and return the central date of the biorhythm
-bioDates getDates(gregorianDate dateCentral); // Use the central date to determine 4 dates around it and return them
-double getDaysElapsed(gregorianDate birthDate, gregorianDate actualDate);
-double getPhysical(double daysElapsed);
-double getEmotional(double daysElapsed);
-double getIntellectual(double daysElapsed);
-int biorhythmLogic(int line, int column, gregorianDate birthDate, bioDates dates);
+int getBirthDate(); // Prompt user for a day, month and year of birth and return as Julian Day
+int getCentralDate(); // Prompt user for a day, month and year and return as a Julian Day
+int getDaysElapsed(int birthDate, int actualDate); // Get the number of days elapsed since birth and return it
+double getPhysical(int daysElapsed); // Get a physical value and return it
+double getEmotional(int daysElapsed); // Get an emotional value and return it
+double getIntellectual(int daysElapsed); // Get an intellectual value and return it
+int biorhythmLogic(int line, int column, int birthDate, int centralDate);
 void printBiorhythm(); // Print a biorhythm
 
 #endif //BIOCALENDAR_FUNCTIONS_H
