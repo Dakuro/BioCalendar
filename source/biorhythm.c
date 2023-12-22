@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <stdbool.h>
 #include "../header/functions.h"
 
 const char *MONTHS[12] = {
@@ -41,7 +42,7 @@ const double VALUES[11] = {
 };
 
 const int MAX_LINE = 13;
-const int MAX_COLUMN = 100;
+const int MAX_COLUMN = 102;
 
 // Prompt user for a day, month and year of birth and return their birthdate
 int getBirthDate(){
@@ -87,7 +88,9 @@ double getIntellectual(int daysElapsed){
 
 
 int biorhythmLogic(int line, int column, int birthDate, int centralDate){
-	int dateIndex, actualDate, daysElapsed;
+	int dateIndex, actualDate, daysElapsed, goodLine;
+	double physState, emoState, intelState, tempState;
+	char stateLetter;
 	if(column == 0){
 		if(line < 4) printf(LEVELS[0], VALUES[line + 1], VALUES[line]);
 		else if(line == 4) printf(LEVELS[1], VALUES[line + 1], VALUES[line]);
@@ -97,18 +100,44 @@ int biorhythmLogic(int line, int column, int birthDate, int centralDate){
 		return column;
 	}
 	
-	dateIndex = (column - (int) strlen(LEVELS[3])) / 3;
-	actualDate = centralDate - 14 + dateIndex;
+	dateIndex = column - (int) strlen(LEVELS[3]) - 1;
+	actualDate = centralDate - 14 + dateIndex / 3;
 	daysElapsed = getDaysElapsed(birthDate, actualDate);
+	physState = getPhysical(daysElapsed);
+	emoState = getEmotional(daysElapsed);
+	intelState = getIntellectual(daysElapsed);
 	
-	// cas 1 : lettre
-		//
-	// cas 2 : |
-		// if dateIndex % 7 == 0
-	// cas 3 : -
-		// if not cas 1 && not cas 2 && line == 4
-	// cas 4 : espace
-		// if not cas 1 && not cas 2 && not cas 3
+	switch(dateIndex % 3){
+	case 0:
+		tempState = physState;
+		stateLetter = 'P';
+		break;
+	case 1:
+		tempState = emoState;
+		stateLetter = 'E';
+		break;
+	case 2:
+		tempState = intelState;
+		stateLetter = 'I';
+		break;
+	default:
+		tempState = 0;
+		stateLetter = ' ';
+		break;
+	}
+	
+	for(int index = 0; index < 10; ++index){
+		if(tempState > VALUES[index + 1]){goodLine = index; break;}
+	}
+	
+	if(line < 10){
+		if(tempState != 0 && line == goodLine) printf("%c", stateLetter);
+		else if((dateIndex / 3) % 7 == 0) printf("|");
+		else printf(line == 4 ? "-" : " ");
+		return column;
+	}
+	
+	
 	
 	return column;
 }
