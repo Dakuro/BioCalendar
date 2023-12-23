@@ -91,6 +91,8 @@ int biorhythmLogic(int line, int column, int birthDate, int centralDate){
 	int dateIndex, actualDate, daysElapsed, goodLine;
 	double physState, emoState, intelState, tempState;
 	char stateLetter;
+	bool isMainDate;
+	gregorianDate displayDate;
 	if(column == 0){
 		if(line < 4) printf(LEVELS[0], VALUES[line + 1], VALUES[line]);
 		else if(line == 4) printf(LEVELS[1], VALUES[line + 1], VALUES[line]);
@@ -121,23 +123,39 @@ int biorhythmLogic(int line, int column, int birthDate, int centralDate){
 		stateLetter = 'I';
 		break;
 	default:
-		tempState = 0;
-		stateLetter = ' ';
+		tempState = 0.0;
+		stateLetter = 'X';
 		break;
 	}
 	
 	for(int index = 0; index < 10; ++index){
-		if(tempState > VALUES[index + 1]){goodLine = index; break;}
+		if(tempState >= VALUES[index + 1]){goodLine = index; break;}
 	}
+	
+	isMainDate = (dateIndex / 3) % 7 == 0;
 	
 	if(line < 10){
 		if(tempState != 0 && line == goodLine) printf("%c", stateLetter);
-		else if((dateIndex / 3) % 7 == 0) printf("|");
+		else if(isMainDate) printf("|");
 		else printf(line == 4 ? "-" : " ");
 		return column;
 	}
 	
-	
+	if(isMainDate){
+		displayDate = toGregorian(actualDate);
+		if(line == 10){
+			printf(displayDate.day < 10 ? " %d " : "%d ", displayDate.day);
+			return column + 2;
+		}
+		if(line == 11){
+			printf("%s", MONTHS[displayDate.month - 1]);
+			return column + 2;
+		}
+		if(line == 12){
+			printf("%d", displayDate.year);
+			return column + 3;
+		}
+	} else printf(" ");
 	
 	return column;
 }
